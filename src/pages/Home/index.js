@@ -13,7 +13,7 @@ function Home() {
   useEffect(() => {
     async function loadFilmes() {
       const response = await api.get("movie/popular", {
-        //pegando a base url e complementando com o movie/popular
+        //pegando a base url e complementando com o movie/popular  
         params: {
           api_key: "aa17e2b78a35ef77db2729c4af17c5c2",
           language: "pt-BR",
@@ -21,8 +21,8 @@ function Home() {
         },
       });
 
-      //console.log(response.data.results.slice(0,20));
-      setFilmes(response.data.results.slice(0, 10));
+      // console.log(response.data.results.slice(0,20));
+      setFilmes(response.data.results.slice(0, 10)); //pegando os 10 primeiros filmes
       setLoading(false);
     }
 

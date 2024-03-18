@@ -22,27 +22,45 @@ function Filme() {
           },
         })
         .then((response) => {
-          setFilme(response.data);
-          setLoading(false);
+          //quando a requisição for bem sucedida
+          setFilme(response.data); //response.data é o objeto que contém as informações do filme
+          setLoading(false); //quando terminar de carregar, o loading será false
         })
         .catch(() => {
-          navigate("/", { replace: true });
+          //quando a requisição não for bem sucedida
+          navigate("/", { replace: true }); //replace permite que o usuário volte para a página anterior
           return;
         });
     }
 
-    loadFilme();
+    loadFilme(); //chamando a função
 
     return () => {
       console.log("Componente desmontado");
     };
-  }, [navigate, id]);
+  }, [navigate, id]); //sempre que o id mudar, o useEffect será chamado
 
   function salvarFilme() {
+    const minhaLista = localStorage.getItem("@filme"); //pegando a lista de filmes do localStorage
+
+    let filmesSalvos = JSON.parse(minhaLista) || []; //se minhaLista for null, filmesSalvos será um array vazio
+
+    const hasFilme = filmesSalvos.some(
+      (filmesSalvo) => filmesSalvo.id === filme.id
+    ); //verificando se o filme já está salvo
+
+    if (hasFilme) {
+      alert("Você já possui esse filme salvo.");
+      return;
+    }
+
+    filmesSalvos.push(filme);
+    localStorage.setItem("@filme", JSON.stringify(filmesSalvos)); //salvando a lista de filmes no localStorage
     alert("Filme salvo com sucesso!");
   }
 
   if (loading) {
+    //se loading for true
     return (
       <div className="filme-info">
         <h1>Carregando filme...</h1>
@@ -66,7 +84,7 @@ function Filme() {
         <button>
           <a
             target="blank"
-            rel="external"
+            rel="external" //opcional
             href={`https://youtube.com/results?search_query=${filme.title}`}
           >
             Trailer
