@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./favoritos.css";
+import {toast} from 'react-toastify'
 
 function Favoritos() {
   const [filmes, setFilmes] = useState([]);
@@ -18,6 +19,7 @@ function Favoritos() {
     setFilmes(filtroFilmes); //definindo a nova lista tirando o aquele id passado como argumento 
     localStorage.setItem("@filme", JSON.stringify(filtroFilmes)) //atualizando o repositorio local como a nova lista convertendo a array
     //em string 
+    toast.success("Filme removido com sucesso")
 
   }
 
